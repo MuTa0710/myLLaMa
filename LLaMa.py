@@ -52,11 +52,11 @@ class Transformer(PreTrainedModel):
         self.register_buffer('freq_cos', self.freqs_cos, persistent=False)
         self.register_buffer('freq_sin', self.freqs_sin, persistent=False)
 
-        self.apply(self._init_weights)#TODO 初始化所有权重，但是什么意思呢
+        self.apply(self._init_weights)#初始化所有权重，这句代码意味着对所有的参数模块进行一个权重随机初始化的过程，通常是均值为0，方差为0.02的正态分布
 
         #TODO 以下代码均需要搞清楚是什么意思
         for pn, p in self.named_parameters():
-            if pn.endswith('w3.weight') or pn.endswith('wo.weight'):
+            if pn.endswith('w2.weight') or pn.endswith('wo.weight'):
                 torch.nn.init.normal_(p, mean=0.0, std=0.02/math.sqrt(2 * args.n_layers))
 
         self.last_loss = None
